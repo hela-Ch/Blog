@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon blog</title>
+    <link rel="stylesheet" href="<?= asset('css/style.css')?>"/>
+
+</head>
+<body>
+    <h1 > <a href=<?=url('/')?>>Mon Blog </a> </h1>
+    <nav> 
+      <?php if(!isAuthenticated()):?>
+          <span> 
+             <a href=<?=url('/signup')?>>Signup </a>
+             <a href=<?=url('/login')?>>Login</a>
+          </span>
+      <? else:?>
+        <span>
+            <a href=<?=url('/logout')?>>
+            Logout
+            </a> 
+        </span>
+      <? endif ?>
+    </nav>
+    <main>
+        <!-- affichage des messages flash -->
+         <?php if(hasFlash()):?>
+              <?php foreach(getFlash() as $message):?>
+                 <p> <?=$message ?> </p>
+              <?php endforeach ?>
+
+         <?php endif ?>
+        <?php require '/Users/hlihla/Desktop/WEBFORCE3/PHP/templates/'.$template.'.phtml'?>
+    </main>
+</body>
+</html>    

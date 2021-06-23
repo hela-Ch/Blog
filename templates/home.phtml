@@ -1,0 +1,15 @@
+
+        <section>
+        <?php foreach($datas as $data):?>
+           <article>
+              <h3> <?= htmlspecialchars($data['title'])?> </h3>
+              <span>category :<?= htmlspecialchars($data['label']) ?></span>
+              <p><?= (new DateTime($data['created_at']))->format('d/m/Y')?></p>
+              <img src="<?= htmlspecialchars($data['image'] )?>" alt=""/> 
+              <div> <?= htmlspecialchars(mb_substr($data['content'],0,200))?>...</div>
+              <a href="/article?article_id=<?= intVal($data['id_article'])?>">lire la suite</a>
+
+           </article>
+        <?php endforeach ?>   
+        </section>
+ 

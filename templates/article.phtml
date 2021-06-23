@@ -1,0 +1,54 @@
+
+        <section>
+           <article>
+            <h3> <?= htmlspecialchars($article['title'])?> </h3>
+            <p> category :<?= htmlspecialchars($article['label'])?> </p>
+            <p><?= (new DateTime($article['created_at']))->format('d/m/Y')?></p>
+            <div> <?= htmlspecialchars($article['content']) ?></div>
+            <img src="<?= htmlspecialchars($article['image']) ?>"/>
+            <!-- 
+            <a href="/article?article_id=<?=$articleId+1?>"> Article suivant</a>
+            -->
+           </article>
+        </section>
+        <!--afficher les erreurs-->
+        <section>
+           <?php if(isset($errors) && !empty($errors)):?>
+              <?php foreach ($errors as $error ):?>
+                 <p><?= $error ?> </p>
+              <?php endforeach?> 
+            <?php endif ?>     
+        </section>
+
+        <?php if(isAuthenticated()):?>
+          <!-- formulaire d'ajout de commentaire -->
+          <form action="<?=url('/article',['article_id' =>$articleId])?>" method="POST">
+            <label for="content">Commentaire </label>
+            <textarea  id="content" name="content"> </textarea>
+            <button type="submit" value="valider"> valider </button>
+          </form>
+        <?php else: ?>
+           <p> "You have to be connected to add a comment,
+              <a href=<?= url('/signup')?>>Signup </a>
+              ou 
+              <a href=<?=url('/login')?>>Login</a>
+           </p>   
+
+        <?php endif ?>   
+
+        <!-- AFFICHAGE DES commentaires -->
+        <section>
+           <h2> Commentaires </h2> 
+           <?php if($comments):?>
+             <ul>
+               <?php foreach ($comments as $comment ):?>
+                 <li>
+                     <h5> <?= htmlspecialchars($comment['firstname'] . ' ' .$comment['lastname'] )?></h5>
+                     <p> <?= htmlspecialchars($comment['content'] )?> </p>
+                     <span> le <?= (new DateTime($comment['created_at']))->format('d/m/Y')?> </span>
+                     
+                 </li>
+               <?php endforeach?> 
+             </ul>  
+            <?php endif ?>     
+        </section>
