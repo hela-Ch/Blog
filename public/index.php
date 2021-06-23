@@ -6,7 +6,7 @@ require '../vendor/autoload.php';
  Le fichier index.php joue le role de front controller
  Toutes les requetes, toutes les pages du site passent par ce fichier
 */
-//inclusion de dependances
+//inclure de dependances
 require '../app/config.php';
 require '../library/functions.php';
 
@@ -28,6 +28,9 @@ switch($path){
     break; 
     case '/logout' :
         require '../controller/logout.php';
+    break; 
+    case '/subscription' :
+        require '../controller/subscription.php';
     break;   
     default:
     http_response_code(404)  ;

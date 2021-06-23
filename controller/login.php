@@ -1,7 +1,4 @@
 <?php
-
-
-
 if(!empty($_POST)){
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -17,7 +14,7 @@ if(!empty($_POST)){
             $user['email']
         );
         addFlash('connexion reussie');
-        //header("Location: /");
+       
         header('Location: '. url('/'));
         exit;
     }else{
@@ -25,17 +22,7 @@ if(!empty($_POST)){
     } 
 
 }  
-//$user =checkCredentials($email,$password) ;  
-
-
-
-
-
-
-
-
-
-
+ 
 $template = 'login';
 require ('/Users/hlihla/Desktop/WEBFORCE3/PHP/templates/base.phtml');
 

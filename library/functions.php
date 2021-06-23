@@ -268,3 +268,28 @@ function url(string $path,array $params=[]){
 function asset(string $path){
     return SITE_BASE_URL .'/' . $path;
 }
+
+
+/**
+ * verify if user is already subscripted to newsletter
+ */
+function verifyUserisAlreadySubscripted(string $email){
+    $sql ='SELECT * 
+           FROM newsletter 
+           WHERE user_email =?
+           ';
+    return selectOne($sql,[$email]);
+         
+
+}
+/**
+ * add an email to the newsletter base
+ */
+
+function addUserToNewsletter(string $email){
+    $sql = 'INSERT INTO newsletter 
+            (user_email,created_at)
+             VALUES (?, NOW())';
+    executeQuery($sql,[$email]);        
+
+}
