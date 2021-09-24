@@ -10,3 +10,12 @@ define('DB_PASSWORD','');
 
 //url de base des liens
 define('SITE_BASE_URL','http://mon-site.com');
+
+//mailtrap information
+
+define('MailHost','');
+define('MailPort','');
+define('MailUsername','');
+define('MailtPassword','');
+
+define('MAILER_DSN','');

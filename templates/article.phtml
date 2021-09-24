@@ -1,11 +1,14 @@
 
-        <section>
-           <article>
-            <h3> <?= htmlspecialchars($article['title'])?> </h3>
-            <p> category :<?= htmlspecialchars($article['label'])?> </p>
-            <p><?= (new DateTime($article['created_at']))->format('d/m/Y')?></p>
+        <section class="my-3 mx-3">
+           <article class="mx-auto d-flex flex-column ">
+            <h3 class="text-center text-dark"> <?= ucfirst(htmlspecialchars($article['title']))?> </h3>
+            <img src="<?= asset('upload/'.htmlspecialchars($article['image']) )?>"  class="img-fluid mx-auto" style="width:50rem;"/>
+            <div>
+               <p class="fw-lighter"><?= (new DateTime($article['created_at']))->format('d/m/Y')?></p>
+               <span class="badge bg-light"> Category :<?= ucfirst(htmlspecialchars($article['label']))?> </span>  
+            </div>
             <div> <?= htmlspecialchars($article['content']) ?></div>
-            <img src="<?= htmlspecialchars($article['image']) ?>"/>
+           
             <!-- 
             <a href="/article?article_id=<?=$articleId+1?>"> Article suivant</a>
             -->
@@ -15,30 +18,37 @@
         <section>
            <?php if(isset($errors) && !empty($errors)):?>
               <?php foreach ($errors as $error ):?>
-                 <p><?= $error ?> </p>
+               <div class="alert alert-dismissible alert-danger">
+                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                 <p> <strong>Oh snap!</strong> <?= $error ?> </p> 
+               </div>   
               <?php endforeach?> 
             <?php endif ?>     
         </section>
 
-        <?php if(isAuthenticated()):?>
+        <?php if((new App\Framework\UserSession())->isAuthenticated()):?>
           <!-- formulaire d'ajout de commentaire -->
           <form action="<?=url('/article',['article_id' =>$articleId])?>" method="POST">
-            <label for="content">Commentaire </label>
+            <label for="content"> Commentaire </label>
             <textarea  id="content" name="content"> </textarea>
-            <button type="submit" value="valider"> valider </button>
+            <button type="submit" class="btn btn-outline-success" value="valider"> valider </button>
           </form>
         <?php else: ?>
-           <p> "You have to be connected to add a comment,
-              <a href=<?= url('/signup')?>>Signup </a>
-              ou 
-              <a href=<?=url('/login')?>>Login</a>
-           </p>   
+         <div class="alert alert-dismissible alert-danger">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <p> <strong> Oh snap! </strong> You have to be connected to add a comment, 
+                  
+                     <a  class="alert-link" href=<?= url('/signup')?>>Signup </a>
+                     or
+                     <a  class="alert-link" href=<?=url('/login')?>>Login</a>
+            </p>         
+         </div> 
 
         <?php endif ?>   
 
         <!-- AFFICHAGE DES commentaires -->
         <section>
-           <h2> Commentaires </h2> 
+           <h3 class="text-success"> <u> Commentaires </u> </h3> 
            <?php if($comments):?>
              <ul>
                <?php foreach ($comments as $comment ):?>

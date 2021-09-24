@@ -1,14 +1,17 @@
-        <section>
-        <?php foreach($datas as $data):?>
-           <article>
-              <h3> <?= htmlspecialchars($data['title'])?> </h3>
-              <span>category :<?= htmlspecialchars($data['label']) ?></span>
-              <p><?= (new DateTime($data['created_at']))->format('d/m/Y')?></p>
-              <img src="<?= htmlspecialchars($data['image'] )?>" alt=""/> 
-              <div> <?= htmlspecialchars(mb_substr($data['content'],0,200))?>...</div>
-              <a href="/article?article_id=<?= intVal($data['id_article'])?>">lire la suite</a>
+   <section class="d-flex justify-content-around flex-wrap my-5 mx-1">
+        <?php foreach($articles as $data):?>
+           <article class="card border-primary mb-3" style="width: 25rem;height:38rem">
+              <img src="<?= asset('upload/'.htmlspecialchars($data['image']) )?>" alt="" class="img-fluid" style="height:15rem;"/> 
+              <div class="card-body d-flex flex-column ">
+                  <h4 class="card-title" style='color:darkslategrey;'> <?= htmlspecialchars($data['title'])?> </h4>
+                  <span class="badge rounded-pill bg-light">Category :<?= htmlspecialchars($data['label']) ?></span>
+                  <p><u><?= (new DateTime($data['created_at']))->format('d/m/Y')?></u></p>
+                  <div class="card-text"> 
+                     <?= htmlspecialchars(mb_substr($data['content'],0,250))?>...
+                     <a href="/article?article_id=<?= intVal($data['id_article'])?>">lire la suite</a>
+                  </div>
+              </div>
 
            </article>
-        <?php endforeach ?>   
-        </section>
- 
+        <?php endforeach ?>  
+   </section>

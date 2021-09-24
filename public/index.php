@@ -8,34 +8,45 @@ require '../vendor/autoload.php';
 */
 //inclure de dependances
 require '../app/config.php';
+
 require '../library/functions.php';
 
-$path = $_SERVER['PATH_INFO']? $_SERVER['PATH_INFO']:'/';
+$path = $_SERVER['PATH_INFO']??'/';
 //dump($path);
 
-switch($path){
-    case '/':
-        require '../controller/home.php';
-    break;  
-    case '/article':
-        require '../controller/article.php';
-    break; 
-    case '/signup' :
-        require '../controller/signup.php';
-    break; 
-    case '/login' :
-        require '../controller/login.php';
-    break; 
-    case '/logout' :
-        require '../controller/logout.php';
-    break; 
-    case '/subscription' :
-        require '../controller/subscription.php';
-    break;   
-    default:
-    http_response_code(404)  ;
-    echo 'error 404 :page not found';
+
+try{
+    $renderer = new App\Service\Renderer\PHPRenderer();
+
+    //routing
+    $routes = require '../app/routes.php';
+
+    if(!array_key_exists($path,$routes)){
+       throw new \App\Exception\NotFoundException();
+        
+    }
+    $action = $routes[$path];
+    $controllerClassname = '\\App\\Controller\\'.$action['controller'];
+    $method = $action['method'];
+
+    $controller = new $controllerClassname($renderer);
+    echo $controller->$method();
+}
+catch (\App\Exception\NotFoundException $exception){
+    http_response_code(404);
+    echo'page not found';
     exit;
 }
+catch (\App\Exception\AccessNotAllowedException $exception){
+    http_response_code(403);
+    echo'Erreur 403 : Accés non autorisé';
+    exit;
+}
+catch (PDOException $exception){
+    echo 'probleme avec la bdd ' . $exception->getMessage();
+}  
+catch(Exception $exception){
+    echo '[Erreur] : ' .$exception->getMessage();
+} 
 
 ?>

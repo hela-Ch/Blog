@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon blog</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" referrerpolicy="no-referrer" />
+    <link rel="stylesheet"  href="<?= asset('css/bootstrap.min.css')?>"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="Scripts/bootstrap.min.js"></script>
+
+</head>
+<body>
+   <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-2">
+        <div class="container-fluid">
+            <a class="navbar-brand" href=<?=url('/admin')?>>Dashbord </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                <a class="nav-link link-light" href=<?=url('/')?>> 
+                    Site public  
+                </a>
+                </li>
+
+                <?php if(!(new App\Framework\UserSession())->isAuthenticated()):?>
+                        <li class="nav-item">
+                            <a class="nav-link link-light" href=<?=url('/signup')?>>Signup </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link-light" href=<?=url('/login')?>>Login</a>
+                        </li>    
+                <?php else:?>
+                    <li class="nav-item">
+                        <a class="nav-link link-light" href=<?=url('/logout')?>>
+                        Logout
+                        </a> 
+                    </li>
+                <?php endif ?>
+        
+            </ul>
+            </div>
+        </div>
+    </nav>   
+   
+    <main>
+        <!-- affichage des messages flash -->
+        <?php $flashbag =  new App\Framework\FlashBag()?>
+         <?php if($flashbag->hasFlash()):?>
+              <?php foreach($flashbag->getFlash() as $message):?>
+                <div class="alert alert-dismissible alert-secondary">
+                   <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <p> <strong>Well done!</strong>  <?= $message ?> </p>
+                </div>
+              <?php endforeach ?>
+
+         <?php endif ?>
+
+        <?php require '../templates/'.$template.'.phtml'?>
+    </main>
+
+</body>
+</html>    

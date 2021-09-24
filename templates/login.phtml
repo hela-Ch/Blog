@@ -1,21 +1,27 @@
 
-<section>
-  <h2> Login </h2>
+<section class="mx-4 my-3">
+  <h2 class="text-danger text-center"> LOGIN </h2>
   <?php if(isset($errors) && !empty($errors)):?>
         <?php foreach ($errors as $error ):?>
-            <p><?= $error ?> </p>
+            <div class="alert alert-dismissible alert-danger">
+                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                 <p> <strong>Oh snap! </strong> <?= $error ?> </p> 
+             </div> 
         <?php endforeach?> 
   <?php endif ?> 
-  <form action ="<?= url('/login')?>" method="POST">
-  <div>
-      <label for="email">Email</label>
-      <input type="text" id="email" name="email"/>
-    </div>
-    <div>
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password"/>
-    </div>  
+  <form action ="<?= url('/login')?>" method="POST" class="mx-auto" style="width: 400px;">
+    <fieldset>
+        <div class="form-group">
+            <label for="email" class="form-label mt-4">Email :</label>
+            <input type="text" id="email" name="email" class="form-control"/>
+        </div>
 
-      <button type="submit" name="valider"> valider </button>
+        <div class="form-group">
+            <label for="password" class="form-label mt-4">Password :</label>
+            <input type="password" id="password" name="password" class="form-control"/>
+        </div>  
+
+        <button type="submit" name="valider" class="mt-2 btn btn-primary"> login </button>
+    <fieldset>
   </form>
 <section>

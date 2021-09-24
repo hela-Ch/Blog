@@ -1,0 +1,52 @@
+<?php if(isset($errors) && !empty($errors)):?>
+        <?php foreach ($errors as $error ):?>
+            <div class="alert alert-dismissible alert-danger">
+                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                 <p> <strong>Oh snap!</strong> <?= $error ?> </p> 
+            </div> 
+        <?php endforeach?> 
+<?php endif ?>  
+
+<section class="mx-5 mb-3 mt-2">
+
+    <form action="<?= url('/admin/article/edit',['article_id'=>$_GET['article_id']])?>" method="POST" enctype="multipart/form-data" class="mx-auto" style="width: 500px;">
+     <fieldset>
+        <legend class="text-danger"><u> Edit an article </u> </legend> 
+
+        <div class="form-group">
+          <label for ="title" class="form-label mt-4">Title :</label>
+          <input type="text" id="title" name="title" value='<?= $title ?>' class="form-control"  aria-describedby="title">
+        </div>
+
+        <div class="form-group">
+          <label for ="category" class="form-label mt-4">Category :</label>
+          <select class="form-select" name="category" id="category">
+              <?php foreach($categories as $category) :?>
+                  <?php $selected = $category['id_category'] == $categoryId ? 'selected' : '' ?>
+                    <option <?= $selected ?> value="<?= intval($category['id_category']) ?>" name="<?=intval( $category['id_category']) ?>">
+                        <?= htmlspecialchars($category['label']) ?>
+                    </option>
+              <?php endforeach ?>  
+             
+         </select>   
+        </div>
+
+        <div class="form-group">
+          <label for ="content" class="form-label mt-4">Content :</label>
+          <textarea class="form-control" id='content' name='content' ><?= $content ?> </textarea>
+        </div>
+
+        <div class='mt-4'>
+          <?php if($image):?>
+              <img src= "<?= asset('upload/'.$image)?>" alt ="" class="img-fluid"/>
+          <?php endif ?>
+        </div>
+
+        <div class="form-group">
+          <label for ="image" class="form-label mt-4"> Image File:</label>
+          <input class="form-control" type="file" id="image" name="image" value='<?= $image?>'/>
+        </div>
+        <button type="submit" class="mt-2 btn btn-primary">Save</button>
+    </fieldset>
+  </form>
+</section>  
